@@ -6,14 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cloudyu" />
+        <module name="service-api" />
+        <module name="cloudweb" />
+        <module name="cloudregisty" />
+        <module name="cloud-user" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cloud-user" options="-parameters" />
+      <module name="cloudregisty" options="-parameters" />
+      <module name="cloudweb" options="-parameters" />
       <module name="cloudyu" options="-parameters" />
+      <module name="service-api" options="-parameters" />
     </option>
   </component>
 </project>

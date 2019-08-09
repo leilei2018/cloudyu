@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: registry
+
+server:
+  port: 8001
+
+eureka:
+  instance:
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 30 #客户端发起续约（心跳）的频率  30秒一次
+    lease-expiration-duration-in-seconds: 90 #90秒，服务端没有在90内没有收到心跳，则移除 evit
+    #ip-address: 192.168.88.88
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka/,http://localhost:8002/eureka/
+    should-enforce-registration-at-init: false #默认是false,延迟40秒后才向服务端注册，可以设置为true，在初始化时候就注册
+    initial-instance-info-replication-interva' l-seconds: 40 #默认40秒之后，才会向server注册自己
+    registry-fetch-interval-seconds: 30 #延迟30秒才会像server拉取注册的服务列表
+  server:
+    enable-self-preservation: true  #eureka对服务的保护机制
+    wait-time-in-ms-when-sync-empty: 0
+    peer-eureka-nodes-update-interval-ms: 900000  #更新节点副本replica，即service-url变更  毫米 默认15分钟
+    renewal-threshold-update-interval-ms: 60000 #更新服务端续约的期望值和阈值  毫秒  默认15分钟
+    eviction-interval-timer-in-ms: 60000 #默认60秒 evit

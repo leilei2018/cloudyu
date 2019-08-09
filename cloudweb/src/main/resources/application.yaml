@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: cloudweb
+
+server:
+  port: 9000
+
+eureka:
+  instance:
+    hostname: localhost
+
+
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka,http://localhost:8002/eureka/
+
+ribbon:
+  eager-load:
+    enabled: true #可以提前加载应用的上下文，避免请求的时候加载上下文。 默认false，感觉有点鸡肋
+    clients: CLOUDUSER,CLOUDUSER  #NamedContextFactory#createContext

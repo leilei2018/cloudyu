@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: clouduser
+
+server:
+  port: 8090
+
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8001/eureka/,http://localhost:8002/eureka/
