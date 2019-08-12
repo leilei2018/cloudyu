@@ -1,0 +1,51 @@
+#作为服务路由分发和路由的
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name: cloud-zuul
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: clouduser
+    api-b:
+      path: /api-b/**
+      serviceId: clouduser
+  thread-pool:
+    use-separate-thread-pools: false
+  ribbon-isolation-strategy: semaphore
+
+ribbon:
+   default:
+     ReadTimeout: 3000
+
+hystrix:
+  command:
+    default: #可以改成${application.name} #AbstractRibbonCommand#getHystrixTimeout
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000 #hystrix超时时间（包括ribbon重试所花时间，所以如果应该大于ribbon超时时间，否则正在重试，就被熔断了
+
+
+#AbstractRibbonCommand#getRibbonTimeout有计算ribbon(一次和重试的总时间)
+#ribbonTimeout = (ribbonReadTimeout + ribbonConnectTimeout) * (maxAutoRetries + 1) * (maxAutoRetriesNextServer + 1);
+#默认等于  (1秒+1秒)  * ( 0+1)  * (1+1)  = 4s
+
+
+#zuul默认信号量100，
+#zuul.eureka.${application.name}.semaphore.maxSemaphores=100
+#如果想用线程池则 abstractRibbonCommand#getSetter
+#设置zuul.thread-pool.use-separate-thread-pools=true 和 zuul.ribbon-isolation-strategy=thread(默认就是信号量100)
+

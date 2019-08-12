@@ -6,20 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="cloudwebalipay" />
         <module name="service-api" />
         <module name="cloudweb" />
         <module name="cloudregisty" />
-        <module name="cloud-user" />
+        <module name="cloudzuul" />
+        <module name="cloudpay" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="clouduser-service-api" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cloud-user" options="-parameters" />
+      <module name="cloudpay" options="-parameters" />
       <module name="cloudregisty" options="-parameters" />
+      <module name="clouduser-service-api" options="-parameters" />
       <module name="cloudweb" options="-parameters" />
+      <module name="cloudwebalipay" options="-parameters" />
       <module name="cloudyu" options="-parameters" />
+      <module name="cloudzuul" options="-parameters" />
       <module name="service-api" options="-parameters" />
     </option>
   </component>

@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: webalipay
+  zipkin:
+    base-url: http://localhost:9411
+
+server:
+  port: 9001
+
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka
+
+ribbon:
+  eager-load:
+    enabled: false #可以提前加载应用的上下文，避免请求的时候加载上下文。 默认false，感觉有点鸡肋
+    clients: CLOUDUSER,CLOUDUSER  #NamedContextFactory#createContext
+  ReadTimeout: 3000  #defaultClientConfigImpl定义 默认取值ribbon.${key} 默认1秒 FeignLoadbalancer
+  ConnectTimeout: 3000 #默认1秒
+  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用 #RequestSpecificRetryHandler
+  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用  LoadBalancerCommand#submit
+  OkToRetryOnAllOperations: false  #是否所有操作都重试  FeignLoadBalancer#getRequestSpecificRetryHandler
+#对于get请求可以重试， put post重试就要注意幂等性了
+
+#也可以设置应用ribbon属性   ${application.name}.ribbon.ReadTimeout=5000
+
+feign:
+  hystrix:
+    enabled: true  #开启熔断 为了创建HystrixFeign.builder()  FeignClientConfiguratioon
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 #默认1000ms 设置熔断的超时时间 所以hystrix的超时时间要大于 (1 + MaxAutoRetries + MaxAutoRetriesNextServer) * ReadTimeout 比较好，具体看需求进行配置。
+
+
+#hystrix.threadpool.${applicationName}.coreSize=5
+#hystrix.threadpool.default.coreSize=5
+#详细查看HystrixThreadPoolProperties
+
+

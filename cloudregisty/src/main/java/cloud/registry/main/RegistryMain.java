@@ -13,7 +13,7 @@ public class RegistryMain {
     public static void main(String[] args) {
 
         new SpringApplicationBuilder(RegistryMain.class)
-                .profiles("server2")
+                .profiles("server1")
 
                 .run(args);
     }

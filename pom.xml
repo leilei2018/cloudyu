@@ -10,6 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>cloudregisty</module>
+        <module>cloudwebalipay</module>
+        <module>cloudzuul</module>
+        <module>cloud-pay</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
