@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    zookeeper:
+      connect-string: 192.168.21.128:2181
+
+#springcloudzookeeper默认读取路径
+#/config/application   /config/${application.name}  应用层会覆盖全局层
+
+#缺点:
+
+#当curator的ConfigWatcher监听zk变化之后，会发布一个RefreshEvent事件
+
+#然后由contextrefresher#refresh
+
+#1重新创建一个注解上下文，重新刷新，重新去zk获取数据，然后把environment替换掉，、
+  #好像不太好，不知道有没有好办法，换成nacos看看
+#2还有一点不好就是：EurekaClientConfigurationRefresher，会将eureka状态变为down，然后在重新注册一遍（好像没必要感觉)
+  #所以接下来试试zk作为注册中心看看
